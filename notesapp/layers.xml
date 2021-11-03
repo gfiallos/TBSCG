@@ -1,0 +1,73 @@
+<layers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/boot/layers"
+        xsi:schemaLocation="http://www.springframework.org/schema/boot/layers
+                     https://www.springframework.org/schema/boot/layers/layers-2.4.xsd">
+  <application>
+    <into layer="spring-boot-loader">
+      <include>org/springframework/boot/loader/**</include>
+    </into>
+    <into layer="application"/>
+  </application>
+  <dependencies>
+    <into layer="snapshot-dependencies">
+      <include>*:*:*SNAPSHOT</include>
+    </into>
+    <into layer="common-dependencies">
+      <include>org.apache.*:*</include>
+      <include>commons*:*</include>
+      <include>ch.qos.logback*:*</include>
+      <include>org.slf4j*:*</include>
+      <include>com.fasterxml*:*</include>
+      <include>*:*modelmapper*</include>
+      <include>jakarta*:*</include>
+      <include>*:*jakarta*</include>
+      <include>org.glassfish*:*</include>
+      <include>org.jboss.logging*:*</include>
+      <include>*google*:*</include>
+      <include>*:*classgrap*</include>
+      <include>*:*antlr*</include>
+      <include>*:*javassist*</include>
+      <include>*:*reflections*</include>
+    </into>
+    <into layer="swagger-dependencies">
+      <include>io.swagger.*:*</include>
+      <include>org.springdoc:*</include>
+      <include>*:*swagger*</include>
+    </into>
+    <into layer="spring-dependencies">
+      <include>org.hibernate*:*</include>
+      <include>*:*postgresql*</include>
+      <include>*:*dom4j*</include>
+      <include>*:*caffeine*</include>
+      <include>*:*stream*</include>
+      <include>*:*rxjava*</include>
+      <include>*:*byte-buddy*</include>
+      <include>org.springframework*:*</include>
+      <include>io.zipkin.*:*</include>
+      <include>com.netflix.*:*</include>
+      <include>io.github.openfeign*:*</include>
+      <include>*:*jersey*</include>
+      <include>*:*aspect*</include>
+      <include>*:*inject*</include>
+      <include>*:*reactor*</include>
+      <include>io.micrometer*:*</include>
+      <include>org.hdrhistogram*:*</include>
+      <include>org.projectlombok*:*</include>
+      <include>org.bouncycastle*:*</include>
+    </into>
+    <into layer="gf-dependencies">
+      <include>com.gf*:*</include>
+    </into>
+
+    <into layer="dependencies"/>
+  </dependencies>
+  <layerOrder>
+    <layer>dependencies</layer>
+    <layer>spring-boot-loader</layer>
+    <layer>snapshot-dependencies</layer>
+    <layer>common-dependencies</layer>
+    <layer>spring-dependencies</layer>
+    <layer>swagger-dependencies</layer>
+    <layer>gf-dependencies</layer>
+    <layer>application</layer>
+  </layerOrder>
+</layers>

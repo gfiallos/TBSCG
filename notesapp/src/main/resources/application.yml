@@ -1,0 +1,68 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    username: gf
+    password: gf
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 50
+      maxLifetime: 60000
+      idleTimeout: 10000
+      connectionTimeout: 30000
+    url: jdbc:postgresql://127.0.0.1/notesapp
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+    open-in-view: true
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  application:
+    name: security-groups-api
+server:
+  tomcat:
+    maxHttpHeaderSize: 10000000
+  servlet:
+    context-path: /
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/css,application/javascript,application/json
+logging:
+  level:
+    root: ERROR
+    springfox: error
+    org:
+      hibernate: warn
+      apache: warn
+      springframework:
+        beans: warn
+        context: warn
+        cloud:
+          loadbalancer: warn
+        scheduling: warn
+        messaging: warn
+        boot: error
+        web: warn
+        jmx: warn
+        test: warn
+        orm: warn
+        security: warn
+        data:
+          rest: warn
+springdoc:
+  show-actuator: false
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /
+    operations-sorter: method
+info:
+  app:
+    version: 1.0.0
+    name: notesapp-api
+    description: Notes APP API

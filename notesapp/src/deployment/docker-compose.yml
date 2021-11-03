@@ -1,0 +1,47 @@
+version: "3.9"
+networks:
+  notesapp:
+    ipam:
+      config:
+        - subnet: 13.1.3.0/24
+services:
+  db:
+    image: postgres
+    hostname: dbserver
+    networks:
+      - notesapp
+    environment:
+      POSTGRES_DB: notesappdb
+      POSTGRES_USER: gf
+      POSTGRES_PASSWORD: gf
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  app:
+    depends_on:
+      - db
+    image: gfiallos/notesapp:1.0
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1G"
+    healthcheck:
+      test: "/usr/bin/curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8881/actuator/health | egrep 200 > /dev/null || exit 1"
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - notesapp
+    ports:
+      - "8881:8881"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dbserver/notesappdb
+      SERVER_PORT: 8881
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+volumes:
+  pgdata:
