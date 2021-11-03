@@ -1,8 +1,10 @@
 package com.gf.notesapp.logic.advice;
 
 import com.gf.notesapp.logic.exception.NODataFoundException;
+import com.gf.notesapp.model.dto.ExceptionData;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,7 +23,7 @@ public class NODataFoundExceptionControllerAdvice extends ExceptionControllerAdv
    */
   @ExceptionHandler(NODataFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public Object noDataFoundExceptionHandler(NODataFoundException pException) {
+  public ResponseEntity<ExceptionData> noDataFoundExceptionHandler(NODataFoundException pException) {
     var data = ExceptionControllerAdvice.prepareData(pException, ExceptionUtils.getRootCause(pException))
         .addData("status", HttpStatus.NOT_FOUND.value())
         .addData("dataType", pException.getType());

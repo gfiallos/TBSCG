@@ -1,8 +1,10 @@
 package com.gf.notesapp.logic.advice;
 
 import com.gf.notesapp.logic.exception.GenericException;
+import com.gf.notesapp.model.dto.ExceptionData;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,7 +23,7 @@ public class GenericExceptionControllerAdvice extends ExceptionControllerAdvice 
    */
   @ExceptionHandler(GenericException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Object noDataFoundExceptionHandler(GenericException pException) {
+  public ResponseEntity<ExceptionData> noDataFoundExceptionHandler(GenericException pException) {
     var data = ExceptionControllerAdvice.prepareData(pException, ExceptionUtils.getRootCause(pException));
     return this.prepareResponse(data, HttpStatus.BAD_REQUEST);
   }

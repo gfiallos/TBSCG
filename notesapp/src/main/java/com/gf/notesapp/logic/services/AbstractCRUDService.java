@@ -39,7 +39,9 @@ public abstract class AbstractCRUDService<E, I, D, R, Q extends JpaRepository<E,
   }
 
   public void delete(@Valid D pRequest) {
-    this.repository.deleteById(this.getIdFromData(pRequest));
+    var id = this.getIdFromData(pRequest);
+    this.validateNotExists(this.findReference(id), Map.of("id", CastUtils.cast(id)));
+    this.repository.deleteById(id);
   }
 
   protected Optional<E> findReference(I pId) {
@@ -50,9 +52,8 @@ public abstract class AbstractCRUDService<E, I, D, R, Q extends JpaRepository<E,
   }
 
   public D get(@Valid I pIdentifier) {
-    return this.mapData(this.findReference(pIdentifier)
-        .orElseThrow(() -> new NODataFoundException(this.getClassType()
-            .getSimpleName())));
+    return this.mapData(this.validateNotExists(this.findReference(pIdentifier),
+        Map.of("id", CastUtils.cast(pIdentifier))));
   }
 
   private Class<E> getClassType() {
@@ -111,9 +112,8 @@ public abstract class AbstractCRUDService<E, I, D, R, Q extends JpaRepository<E,
   }
 
   public D modify(@Valid D pRequest) {
-    var entity = this.findReference(this.getIdFromData(pRequest))
-        .orElseThrow(() -> new NODataFoundException(this.getClassType()
-            .getSimpleName()));
+    var id = this.getIdFromData(pRequest);
+    var entity = this.validateNotExists(this.findReference(id), Map.of("id", CastUtils.cast(id)));
     this.mapDataEntity(pRequest, entity);
     return this.mapData(this.save(entity));
   }

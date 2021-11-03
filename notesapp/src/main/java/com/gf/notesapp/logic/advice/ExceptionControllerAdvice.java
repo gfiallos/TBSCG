@@ -63,7 +63,7 @@ public class ExceptionControllerAdvice {
                 .getName());
   }
 
-  protected ResponseEntity<Object> manageCommonExceptionResponseEntity(Exception pException, HttpStatus pStatus) {
+  protected ResponseEntity<ExceptionData> manageCommonExceptionResponseEntity(Exception pException, HttpStatus pStatus) {
     var data = ExceptionControllerAdvice.prepareData(pException, ExceptionUtils.getRootCause(pException));
     return this.prepareResponse(data, pStatus);
   }
@@ -75,7 +75,7 @@ public class ExceptionControllerAdvice {
    * @param pStatus the p status value
    * @return the response entity
    */
-  protected ResponseEntity<Object> prepareResponse(ExceptionData pMap, HttpStatus pStatus) {
+  protected ResponseEntity<ExceptionData> prepareResponse(ExceptionData pMap, HttpStatus pStatus) {
     pMap.setHttpStatus(pStatus.value());
     return new ResponseEntity<>(pMap, pStatus);
   }

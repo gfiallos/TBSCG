@@ -8,5 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/tags")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Tags", description = "Tags Operations")
 public class TagsRestController extends AbstractCRUDRestController<Tag, String, TagData, TagData, TagsService> {
 }
