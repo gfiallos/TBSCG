@@ -40,7 +40,8 @@ public abstract class AbstractCRUDService<E, I, D, R, Q extends JpaRepository<E,
 
   public void delete(@Valid D pRequest) {
     var id = this.getIdFromData(pRequest);
-    this.validateNotExists(this.findReference(id), Map.of("id", CastUtils.cast(id)));
+    var entity = this.validateNotExists(this.findReference(id), Map.of("id", CastUtils.cast(id)));
+    this.prePersist(entity, true);
     this.repository.deleteById(id);
   }
 
@@ -118,7 +119,7 @@ public abstract class AbstractCRUDService<E, I, D, R, Q extends JpaRepository<E,
     return this.mapData(this.save(entity));
   }
 
-  protected void prePersist(E pData) {
+  protected void prePersist(E pData, boolean pDelete) {
     // Empty
   }
 
@@ -151,7 +152,7 @@ public abstract class AbstractCRUDService<E, I, D, R, Q extends JpaRepository<E,
   }
 
   protected E save(E pData) {
-    this.prePersist(pData);
+    this.prePersist(pData, false);
     return this.repository.save(pData);
   }
 

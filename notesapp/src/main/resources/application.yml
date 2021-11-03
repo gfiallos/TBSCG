@@ -59,7 +59,7 @@ springdoc:
   api-docs:
     path: /api-docs
   swagger-ui:
-    path: /openAPI.html
+    path: /
     operations-sorter: method
 info:
   app:
