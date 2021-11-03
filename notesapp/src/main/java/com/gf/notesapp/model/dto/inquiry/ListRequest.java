@@ -1,39 +1,24 @@
 package com.gf.notesapp.model.dto.inquiry;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Optional;
 
 @Data
+@Schema(name = "ListRequest", description = "Request for listing data")
 public class ListRequest {
   @Valid
+  @Schema(description = "Search Request")
   private List<Criteria> criteria;
   @Valid
+  @Schema(description = "Sort Request")
   private List<OrderRequest> order;
   @NotNull
   @Valid
+  @Schema(description = "Pagination Request")
   private Pagination pagination;
 
-
-  public String findCriteria(String pName) {
-    return this.getCriteria()
-        .stream()
-        .filter(c1 -> c1.getName()
-            .equals(pName))
-        .findFirst()
-        .map(Criteria::getValue)
-        .orElse(null);
-  }
-
-
-  public boolean hasCriteria(String pName) {
-    return Optional.ofNullable(this.getCriteria())
-        .map(c -> c.stream()
-            .anyMatch(c1 -> c1.getName()
-                .equals(pName)))
-        .orElse(false);
-  }
 }

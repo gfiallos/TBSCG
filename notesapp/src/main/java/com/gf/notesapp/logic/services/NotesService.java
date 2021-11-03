@@ -24,8 +24,11 @@ public class NotesService extends AbstractCRUDService<Note, Integer, NoteData, N
   @Override
   protected void mapDataEntity(NoteData pRequest, Note pEntity) {
     pEntity.setContent(pRequest.getContent())
-        .setDate(new Timestamp(System.currentTimeMillis()))
         .setTitle(pRequest.getTitle());
+  }
 
+  @Override
+  protected void prePersist(Note pData) {
+    pData.setDate(new Timestamp(System.currentTimeMillis()));
   }
 }

@@ -4,6 +4,7 @@ import com.gf.notesapp.logic.services.AbstractCRUDService;
 import com.gf.notesapp.model.dto.inquiry.ListRequest;
 import com.gf.notesapp.model.dto.inquiry.PageData;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public abstract class AbstractCRUDRestController<E, I, D, R, S extends AbstractC
 
   @GetMapping("/{id}")
   @Operation(summary = "Get an entity by id")
+  @Parameter(name = "id", description = "The id of the entity to retrieve", required = true)
   public D get(@PathVariable("id") I pIdentifier) {
     return this.dataService.get(pIdentifier);
   }

@@ -13,6 +13,8 @@ public class Note {
   private String content;
   private Timestamp date;
   @Id
+  @GeneratedValue(generator = "noteseq")
+  @SequenceGenerator(name = "noteseq", sequenceName = "NOTESEQ", allocationSize = 1)
   private Integer id;
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "tnotetags", joinColumns = @JoinColumn(name = "noteid"), inverseJoinColumns = @JoinColumn(name = "tagid"))
